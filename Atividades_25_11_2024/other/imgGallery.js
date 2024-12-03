@@ -2,7 +2,7 @@ const express = require("express")
 const axios = require('axios')
 
 const app = express()
-const PORT = 3000
+const PORT = 3001
 app.listen(PORT)
 
 var mysql = require('mysql'); 
@@ -17,7 +17,7 @@ app.get("/connect", async(req, res) =>{
             host: "localhost",
             user: "root",
             password: "",
-            database: "banco"
+            database: "imagensDB"
         
         })
         con.connect(function(err){
@@ -55,9 +55,9 @@ app.get("/disconnect", async(req, res) =>{
  */
 
 //SELECT
-app.get("/select", async(req, res) =>{
+app.get("/selectImgs", async(req, res) =>{
         try{
-            var sql = `SELECT * FROM funcionarios`;  
+            var sql = `SELECT * FROM imagens`;  
             con.query(sql, function (err, result) {  
                 res.status(200).json({"Select":result})  
             })
@@ -66,10 +66,10 @@ app.get("/select", async(req, res) =>{
         }
 })
 
-app.get("/select/:id", async(req, res) =>{
+app.get("/selectImg/:id", async(req, res) =>{
     try{
-        var sql = `SELECT * FROM funcionarios WHERE ID = ?`;  
-        con.query(sql,[ req.params.id], function (err, result) {  
+        var sql = `SELECT * FROM imagens WHERE ID = ?`;  
+        con.query(sql,[req.params.id], function (err, result) {  
             res.status(200).json({"Select":result})  
         })
     }catch(error){
@@ -77,20 +77,19 @@ app.get("/select/:id", async(req, res) =>{
     }
 })
 
-
 //UPDATE
-app.put("/update/:id", async(req, res) =>{
+app.put("/updateImg/:id", async(req, res) =>{
     try{
-        const newUser = req.body
+        const newImage = req.body
+        console.log(newImage)
         var sql = `
-        UPDATE funcionarios 
-        SET nome = ?, 
-        idade = ?, 
-        salario = ?
+        UPDATE imagens 
+        SET referencia = ?, 
+        titulo = ?
         WHERE id = ?
         `;  
-        con.query(sql, [newUser.nome, newUser.idade, parseFloat(newUser.salario), req.params.id], function (err, result) {  
-            res.status(200).json("Atualizado com sucesso")  
+        con.query(sql, [newImage.referencia, newImage.titulo, req.params.id], function (err, result) {  
+            res.status(200).json("Atualizada com sucesso")  
         })
     }catch(error){
         res.status(500).json("Erro ao fazer operação crud")
@@ -99,11 +98,11 @@ app.put("/update/:id", async(req, res) =>{
 })
 
 //DELETE
-app.delete("/delete/:id", async(req, res) =>{
+app.delete("/deleteImg/:id", async(req, res) =>{
     try{
-        var sql = `DELETE FROM funcionarios WHERE ID = ?`;  
+        var sql = `DELETE FROM imagens WHERE ID = ?`;  
         con.query(sql, [parseInt(req.params.id)], function (err, result) {  
-            res.status(200).json("Deletado com sucesso")  
+            res.status(200).json("Deletada com sucesso")  
         })
     }catch(error){
         res.status(500).json("Erro ao fazer operação crud")
@@ -111,12 +110,12 @@ app.delete("/delete/:id", async(req, res) =>{
 })
 
 //CREATE
-app.post("/create", async(req, res) =>{
+app.post("/createImg", async(req, res) =>{
     try{
-        var sql = `INSERT INTO funcionarios (nome, idade, salario, data_criacao)
-        values(?, ?, ?, ?)`;  
-        con.query(sql, [req.body.nome, req.body.idade, req.body.salario, req.body.data_criacao], function (err, result) {  
-            res.status(200).json("Criado com sucesso")  
+        var sql = `INSERT INTO imagens (referencia, titulo, data_criacao)
+        values(?, ?, ?)`;  
+        con.query(sql, [req.body.referencia, req.body.titulo, req.body.data_criacao], function (err, result) {  
+            res.status(200).json("Criada com sucesso")  
         })
     }catch(error){
         res.status(500).json("Erro ao fazer operação crud")
