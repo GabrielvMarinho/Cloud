@@ -1,8 +1,9 @@
 
 const userModel = require("../MODEL/userModel")
+const con = require("../SERVICES/dbCon.js")
 
 
-async function selectRepository(con, sql){
+async function selectRepository(sql){
 
     return new Promise(resolve =>{
         con.query(sql, function (err, result) { 
@@ -19,4 +20,26 @@ async function selectRepository(con, sql){
     
 }
 
-module.exports = selectRepository;
+async function insertRepository(sql){
+
+    return new Promise(resolve =>{
+
+    con.query(sql, function (err, result){
+        try{
+            if(result.affectedRows>0){
+                resolve();
+            }
+        }catch{
+            resolve("dados inconsistentes");
+
+        }
+        
+        
+
+    })
+})
+}
+
+
+
+module.exports = {selectRepository, insertRepository};
