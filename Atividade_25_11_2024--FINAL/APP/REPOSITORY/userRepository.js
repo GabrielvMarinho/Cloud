@@ -22,24 +22,23 @@ async function selectRepository(sql){
 
 async function insertRepository(sql){
 
-    return new Promise(resolve =>{
-
+    console.log(sql)
     con.query(sql, function (err, result){
-        try{
-            if(result.affectedRows>0){
-                resolve();
-            }
-        }catch{
-            resolve("dados inconsistentes");
-
-        }
-        
-        
-
+        return;
     })
-})
 }
 
 
+async function updateRepository(sql){
+    con.query(sql, function (err, result){
+        return;
+    })
+}
 
-module.exports = {selectRepository, insertRepository};
+async function deleteRepository(sql){
+    con.query(sql, function (err, result){
+        return;
+    })
+}
+
+module.exports = {selectRepository, insertRepository, updateRepository, deleteRepository};

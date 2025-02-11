@@ -1,4 +1,5 @@
-const {selectService, insertService} = require("../SERVICES/userService.js")
+const { deleteRepository } = require("../REPOSITORY/userRepository.js")
+const {selectService, insertService, updateService, deleteService} = require("../SERVICES/userService.js")
 
 async function selectController(req, res){
     try{
@@ -15,14 +16,50 @@ async function selectController(req, res){
 
 async function insertController(req, res){
     try{
-        console.log(req.body)
-        const resp = await insertService(req.body.nome, req.body.data_criacao)
+        console.log(req.body.nome)
 
-        if(resp!=undefined){
-            res.status(200).json(resp)
+        if(req.body.nome && req.body.data_criacao){
+            insertService(req.body.nome, req.body.data_criacao)
+
+            res.status(200).json("Operação realizada com sucesso")
 
         }else{
+            res.status(200).json("dados faltando")
+
+        }
+    }catch(error){
+        res.status(500).json("Erro ao fazer operação crud")
+    }
+}
+
+async function updateController(req, res){
+    try{
+        console.log(req.body.nome)
+
+        if(req.body.id && req.body.nome && req.body.data_criacao){
+            updateService(req.body.id, req.body.nome, req.body.data_criacao)
+
             res.status(200).json("Operação realizada com sucesso")
+
+        }else{
+            res.status(200).json("dados faltando")
+
+        }
+    }catch(error){
+        res.status(500).json("Erro ao fazer operação crud")
+    }
+}
+
+async function deleteController(req, res){
+    try{
+
+        if(req.body.id){
+            deleteService(req.body.id)
+
+            res.status(200).json("Operação realizada com sucesso")
+
+        }else{
+            res.status(200).json("dados faltando")
 
         }
     }catch(error){
@@ -31,4 +68,6 @@ async function insertController(req, res){
 }
 
 
-module.exports = {selectController, insertController}
+
+
+module.exports = {selectController, insertController, updateController, deleteController}

@@ -1,4 +1,4 @@
-const {selectRepository, insertRepository} = require("../REPOSITORY/userRepository")
+const {selectRepository, insertRepository, updateRepository, deleteRepository} = require("../REPOSITORY/userRepository")
 const userDTO = require("../DTOs/userDTOs")
 const userModel = require("../MODEL/userModel")
 
@@ -18,8 +18,21 @@ async function selectService(){
 
 async function insertService(nome, data_criacao){
     var sql = `INSERT INTO usuario(nome, data_criacao) values ("${nome}", "${data_criacao}")`;
-    const resp = await insertRepository(sql)
-    return resp
+    insertRepository(sql)
+    return;
 }
 
-module.exports = {selectService, insertService};
+async function updateService(id, nome, data_criacao){
+    var sql = `update usuario set nome ="${nome}", data_criacao="${data_criacao}" where id = ${id}`;
+    updateRepository(sql)
+    return;
+    
+}
+async function deleteService(id){
+    var sql = `delete from usuario where id = ${id}`;
+
+    deleteRepository(sql)
+    return;
+    
+}
+module.exports = {selectService, insertService, updateService, deleteService};
