@@ -1,12 +1,11 @@
 const express = require("express");
-const {selectController, insertController, updateController, deleteController} = require("../CONTROLLER/userController.js")
+const { selectUserController, insertUserController, updateUserController, deleteUserController } = require("../CONTROLLER/userController");
 
-const router =express.Router()
+const router = express.Router();
 
-router.get("/select", selectController)
-router.post("/insert", insertController)
-router.put("/update", updateController)
-router.delete("/delete", deleteController)
+router.get("/users", selectUserController);
+router.post("/users", insertUserController);
+router.put("/users", updateUserController);
+router.delete("/users", deleteUserController);
 
-module.exports = router
-
+module.exports = router;

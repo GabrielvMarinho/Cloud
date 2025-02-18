@@ -1,9 +1,9 @@
-class UserModel{
-    constructor(id, nome, data_criacao){
+class UserModel {
+    constructor(id, nome, data_criacao) {
         this.id = id;
         this.nome = nome;
-        this.data_criacao = data_criacao
+        this.data_criacao = data_criacao;
     }
-}   
+}
 
-module.exports = UserModel
+module.exports = UserModel;
