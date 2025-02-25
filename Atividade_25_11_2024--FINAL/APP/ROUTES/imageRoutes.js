@@ -1,11 +1,12 @@
 const express = require("express");
-const { selectImageController, insertImageController, updateImageController, deleteImageController } = require("../CONTROLLER/imageController");
+const { selectImageController, downloadImagesController, updateImageController, deleteImageController, uploadFilesController } = require("../CONTROLLER/imageController");
 
 const router = express.Router();
 
 router.get("/images", selectImageController);
-router.post("/images", insertImageController);
+router.get("/image", downloadImagesController)
 // router.put("/images", updateImageController);
 // router.delete("/images", deleteImageController);
+router.post("/images", uploadFilesController)
 
 module.exports = router;

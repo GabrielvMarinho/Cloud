@@ -1,4 +1,4 @@
-const { selectImageService, insertImageService, updateImageService, deleteImageService, uploadFilesService } = require("../SERVICES/imageService");
+const { selectImageService, downloadImage, updateImageService, deleteImageService, uploadFilesService } = require("../SERVICES/imageService");
 
 
 
@@ -8,20 +8,28 @@ const { selectImageService, insertImageService, updateImageService, deleteImageS
 
 async function uploadFilesController(req, res){
     try{
-        const {filePath, bucketName, keyName, titulo} = req.body;
-        const imagem = await uploadFilesService(filePath, bucketName, keyName, titulo);
+        const {filePath, bucketName, keyName, titulo, id_user} = req.body;
+        console.log(req.body)
+        const imagem = await uploadFilesService(filePath, bucketName, keyName, titulo, id_user);
         res.status(200).json(imagem)
     }catch(error){
-        res.status(500).json("Erro ao fazer upload de image")
+        res.status(500).json("Erro ao fazer upload de imagem")
     }
 
 }
 
 
+async function downloadImagesController(req, res){
+    try{
 
-
-
-
+        const {keyName} = req.body
+        console.log(req.body)
+        downloadImage(keyName)
+        res.status(200).json("download feito")
+    }catch(error){
+        res.status(500).json("deu erro no s3")
+    }
+}
 
 async function selectImageController(req, res) {
     try {
@@ -32,19 +40,7 @@ async function selectImageController(req, res) {
     }
 }
 
-async function insertImageController(req, res) {
-    try {
-        const { titulo } = req.body;
-        if (titulo) {
-            await insertImageService(titulo);
-            res.status(200).json("Imagem inserida com sucesso");
-        } else {
-            res.status(400).json("Dados faltando");
-        }
-    } catch (error) {
-        res.status(500).json("Erro ao inserir imagem");
-    }
-}
+
 
 async function updateImageController(req, res) {
     try {
@@ -74,4 +70,4 @@ async function deleteImageController(req, res) {
     }
 }
 
-module.exports = { selectImageController, insertImageController, updateImageController, deleteImageController, uploadFilesController };
+module.exports = {downloadImagesController,  selectImageController, updateImageController, deleteImageController, uploadFilesController };

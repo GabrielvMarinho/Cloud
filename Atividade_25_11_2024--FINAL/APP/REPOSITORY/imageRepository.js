@@ -12,9 +12,6 @@ async function selectImageRepository(sql) {
 async function uploadFilesRepository(sql){
     con.query(sql, () => {});
 }
-async function insertImageRepository(sql) {
-    con.query(sql, () => {});
-}
 
 async function updateImageRepository(sql) {
     con.query(sql, () => {});
@@ -24,4 +21,4 @@ async function deleteImageRepository(sql) {
     con.query(sql, () => {});
 }
 
-module.exports = { selectImageRepository, insertImageRepository, updateImageRepository, deleteImageRepository, uploadFilesRepository };
+module.exports = { selectImageRepository, updateImageRepository, deleteImageRepository, uploadFilesRepository };
